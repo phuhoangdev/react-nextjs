@@ -1,1 +1,3 @@
-import * from './hero'
+export * from './hero';
+export * from './recentPosts';
+export * from './featuredWorks';

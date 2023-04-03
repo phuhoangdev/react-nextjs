@@ -27,8 +27,17 @@ export function HeroSection() {
                   </Button>
                </Box>
 
-               <Box sx={{ minWidth: '240px', boxShadow: '-5px 13px', color: 'secondary.light', borderRadius: '50%' }}>
-                  <Image src={avatar} layout="responsive" alt="avatar" />
+               <Box
+                  sx={{
+                     position: 'relative',
+                     minWidth: '240px',
+                     height: '240px',
+                     boxShadow: '-5px 13px',
+                     color: 'secondary.light',
+                     borderRadius: '50%',
+                  }}
+               >
+                  <Image src={avatar} sizes="100%" fill alt="avatar" />
                </Box>
             </Stack>
          </Container>
