@@ -1,47 +1,46 @@
-import { authApi } from '@/apiClient';
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/router';
 import React from 'react';
+import { LoginForm } from '@/components/auth';
+import { useAuth } from '@/hooks/useAuth';
+import { LoginPayload } from '@/models';
+import { Box, Paper, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
+import { getErrorMessage } from '@/utils';
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
    const router = useRouter();
-   const { profile, login, logout } = useAuth({
+   const { login } = useAuth({
       revalidateOnMount: false,
    });
 
-   async function handleLoginClick() {
+   async function handleLoginSubmit(payload: LoginPayload) {
       try {
-         await login();
-         console.log('login successfully');
-         router.push('/about');
-      } catch (error) {
-         console.log('failes to login', error);
-      }
-   }
-   async function handleGetProfileClick() {
-      try {
-         await authApi.getProfile();
-      } catch (error) {
-         console.log('failes to get profile', error);
-      }
-   }
-   async function handleLogoutClick() {
-      try {
-         await logout();
-         console.log('logout successfully');
-      } catch (error) {
-         console.log('failes to logout', error);
+         await login(payload);
+         toast.success('Login Successfully');
+         router.push('/');
+      } catch (error: unknown) {
+         const message = getErrorMessage(error);
+         toast.error(message);
       }
    }
    return (
-      <div>
-         <h1>Login Page</h1>
+      <Box>
+         <Paper
+            elevation={4}
+            sx={{
+               mx: 'auto',
+               mt: 8,
+               p: 4,
+               maxWidth: '480px',
+               textAlign: 'center',
+            }}
+         >
+            <Typography component="h1" variant="h5" mb={3}>
+               Login
+            </Typography>
 
-         <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p>
-
-         <button onClick={handleLoginClick}>Login</button>
-         <button onClick={handleLogoutClick}>Logout</button>
-         <button onClick={() => router.push('/about')}>Go to about</button>
-      </div>
+            <LoginForm onSubmit={handleLoginSubmit} />
+         </Paper>
+      </Box>
    );
 }

@@ -1,1 +1,1 @@
-import * from "./useAuth"
+export * from './useAuth';

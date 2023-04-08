@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HeaderMobile } from './headerMobile';
 import { HeaderDesktop } from './headerDesktop';
 
-export function Header() {
+export default function Header() {
    return (
       <>
          <HeaderMobile />
